@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>AJAX API Animal List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<div id="container">
+
+<body>
+  <div id="buttons">
+    <button data-animal="dogs">Dogs</button>
+    <button data-animal="hermit crab">Hermit Crabs</button>
+    <button data-animal="horse">Horse</button>
+    <button data-animal="pigs">Pigs</button>
+    <button data-animal="Chinchilla">Chinchilla</button>
+    <button data-animal="turtle">Turtle</button>
+    <button data-animal="sugar glider">Sugar Glider</button>
+    <button data-animal="hedgehogs">Hedgehogs</button>
+    <button data-animal="chickens">Chickens</button>
+    <button data-animal="teacup Pig">Teacup Pig</button>
+    <button data-animal="birds">Birds</button>
+    <button data-animal="frogs">Frogs</button>
+    <button data-animal="Hamsters">Hamsters</button>
+    <button data-animal="goldfish">Goldfish</button>
+    <button data-animal="skunks">Skunks</button>
+    <button data-animal="Rabbit">Rabbit</button>
+    
+  </div>
+
+  <div id="animal-list">
+  </div>
+
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript">
+    $("button").on("click", function() {
+      var animal = $(this).attr("data-animal");
+      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        .done(function(response) {
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div class='item'>");
+
+                var animalImage = $("<img>");
+            animalImage.attr("src", results[i].images.fixed_height.url);
+
+          
+            gifDiv.prepend(animalImage);
+
+            $("#animal-list").prepend(gifDiv);
+          }
+        });
+    });
+
+    //$("button") {border-radius: 2px;};
+    
+  </script>
+</body>
+</div>
+</html>
